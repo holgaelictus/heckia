@@ -1,0 +1,139 @@
+// ============================================================================
+// SCRIPTS DE PRUEBA PARA MAP_A0_INICIO_2
+// ============================================================================
+
+// Variables temporales para probar sin gastar variables permanentes
+const VAR_TEST_CONTADOR = VAR_TEMP_0
+const VAR_TEST_TRIGGER  = VAR_TEMP_1
+
+// ----------------------------------------------------------------------------
+// 1. NPC DE KIT DE INICIO (Desbloquea menú Pokémon, Pokédex, Zapatillas y Mon)
+// ----------------------------------------------------------------------------
+// Asignar a: Un Object Event (NPC) cerca de donde apareces en (17, 27).
+script A0_Inicio_2_EventScript_NpcKitPruebas {
+    lock
+    faceplayer
+    
+    // Comprobamos si ya recibiste el kit usando una variable temporal o flag
+    if (flag(FLAG_SYS_POKEMON_GET) == TRUE) {
+        msgbox("Ya tienes tu equipo listo.\n¡Prueba el estanque o las casas!")
+        release
+        end
+    }
+
+    msgbox("¡Bienvenido al mapa de pruebas!\n¿Quieres activar el kit de desarrollo?", MSGBOX_YESNO)
+    
+    if (var(VAR_RESULT) == YES) {
+        // Activa las flags esenciales del motor para poder abrir el menú y correr
+        setflag(FLAG_SYS_POKEMON_GET)
+        setflag(FLAG_SYS_POKEDEX_GET)
+        setflag(FLAG_SYS_B_DASH) // Permite correr manteniendo B
+
+        // Te entrega un Pokémon inicial (Mudkip nivel 15)
+        givemon(SPECIES_MUDKIP, 15, ITEM_ORAN_BERRY)
+        playfanfare(MUS_OBTAIN_ITEM)
+        msgbox("¡Has recibido un MUDKIP y las\nZapatillas Deportivas!")
+        waitfanfare
+
+        // Te da objetos útiles para probar mochilas y tiendas
+        giveitem(ITEM_POKE_BALL, 10)
+        giveitem(ITEM_POTION, 5)
+        giveitem(ITEM_RARE_CANDY, 5)
+    } else {
+        msgbox("Avísame cuando quieras empezar las pruebas.")
+    }
+
+    release
+    end
+}
+
+// ----------------------------------------------------------------------------
+// 2. NPC CONTADOR CON VARIABLES Y ARITMÉTICA (addvar / buffernumberstring)
+// ----------------------------------------------------------------------------
+// Asignar a: Un segundo NPC para probar cómo sube y se reinicia una variable.
+script A0_Inicio_2_EventScript_NpcContador {
+    lock
+    faceplayer
+
+    // Sumamos 1 cada vez que hablas con él
+    addvar(VAR_TEST_CONTADOR, 1)
+    
+    // Cargamos el valor numérico de la variable en STR_VAR_1 para mostrarlo
+    buffernumberstring(STR_VAR_1, VAR_TEST_CONTADOR)
+
+    switch (var(VAR_TEST_CONTADOR)) {
+        case 1:
+            msgbox("Has hablado conmigo {STR_VAR_1} vez.\nLa variable empieza en 0 y suma 1.")
+        case 5:
+            msgbox("¡Llevas {STR_VAR_1} charlas! Toma un premio\npor alcanzar este valor en la variable.")
+            giveitem(ITEM_SUPER_POTION, 1)
+        case 10:
+            msgbox("Has llegado a {STR_VAR_1}. Reiniciando contador a 0.")
+            setvar(VAR_TEST_CONTADOR, 0)
+        default:
+            msgbox("Contador actual de VAR_TEMP_0: {STR_VAR_1}.")
+    }
+
+    release
+    end
+}
+
+// ----------------------------------------------------------------------------
+// 3. CARTEL INTERACTIVO CON MENÚ DINÁMICO (dynmultichoice)
+// ----------------------------------------------------------------------------
+// Asignar a: Un BG Event (Signpost) junto a una de las casas de la derecha.
+script A0_Inicio_2_EventScript_CartelMenu {
+    lockall
+    message("Panel de control del mapa.\nElige una acción:")
+    waitmessage
+
+    dynmultichoice(0, 0, FALSE, 4, 0, DYN_MULTICHOICE_CB_NONE,
+        "Curar equipo",
+        "Cambiar clima (Lluvia)",
+        "Quitar clima",
+        "Cerrar"
+    )
+    closemessage
+
+    switch (var(VAR_RESULT)) {
+        case 0:
+            fadescreen(FADE_TO_BLACK)
+            playfanfare(MUS_HEAL)
+            waitfanfare
+            special(HealPlayerParty)
+            fadescreen(FADE_FROM_BLACK)
+            msgbox("¡Equipo curado al máximo!")
+        case 1:
+            setweather(WEATHER_RAIN)
+            doweather
+            msgbox("Clima cambiado a lluvia.")
+        case 2:
+            setweather(WEATHER_NONE)
+            doweather
+            msgbox("Clima despejado.")
+        default:
+            break
+    }
+
+    releaseall
+    end
+}
+
+// ----------------------------------------------------------------------------
+// 4. TRIGGER DE SUELO / COORD EVENT (Evita bucle con VAR_TEMP_1)
+// ----------------------------------------------------------------------------
+// Asignar a: Un Coord Event frente a la puerta de una casa o el estanque.
+// En Porymap pon: Var = VAR_TEMP_1 | Value = 0
+script A0_Inicio_2_EventScript_TriggerAviso {
+    lockall
+    playse(SE_PIN)
+    applymovement(OBJ_EVENT_ID_PLAYER, moves(emote_exclamation_mark))
+    waitmovement(0)
+    
+    msgbox("¡Has pisado un Coord Event!\nCambio VAR_TEMP_1 a 1 para no repetirlo.")
+    
+    // Al cambiar VAR_TEMP_1 a 1, el evento ya no cumple la condición (Value == 0)
+    setvar(VAR_TEST_TRIGGER, 1)
+    releaseall
+    end
+}

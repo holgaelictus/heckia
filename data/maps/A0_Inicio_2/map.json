@@ -19,7 +19,50 @@
       "direction": "right"
     }
   ],
-  "object_events": [],
+  "object_events": [
+    {
+      "local_id": "A0_Inicio_2_EventScript_NpcKitPruebas",
+      "graphics_id": "OBJ_EVENT_GFX_BRENDAN_NORMAL",
+      "x": 6,
+      "y": 25,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "A0_Inicio_2_EventScript_NpcKitPruebas",
+      "flag": "0"
+    },
+    {
+      "local_id": "A0_Inicio_2_EventScript_NpcKitPruebas",
+      "graphics_id": "OBJ_EVENT_GFX_BIG_REGIROCK_DOLL",
+      "x": 6,
+      "y": 25,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "A0_Inicio_2_EventScript_NpcKitPruebas",
+      "flag": "0"
+    },
+    {
+      "local_id": "A0_Inicio_2_EventScript_NpcContador",
+      "graphics_id": "OBJ_EVENT_GFX_APRICORN_TREE",
+      "x": 8,
+      "y": 24,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "A0_Inicio_2_EventScript_NpcContador",
+      "flag": "0"
+    }
+  ],
   "warp_events": [],
   "coord_events": [],
   "bg_events": []
