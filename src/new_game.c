@@ -212,10 +212,8 @@ void NewGameInitData(void)
     InitDewfordTrend();
     ResetFanClub();
     ResetLotteryCorner();
-    UpdateDailySeed();
     WarpToTruck();
     UpdateDailySeed();
-    WarpToTruck();
     SetLastHealLocationWarp(HEAL_LOCATION_A0_INICIO_2);
     // --- AÑADIR ESTO PARA SALTARSE A BIRCH SIN ERRORES ---
     gSaveBlock2Ptr->playerGender = MALE; // O FEMALE
