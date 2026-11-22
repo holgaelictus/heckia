@@ -212,14 +212,14 @@ void NewGameInitData(void)
     InitDewfordTrend();
     ResetFanClub();
     ResetLotteryCorner();
-    WarpToTruck();
     UpdateDailySeed();
+
+    gSaveBlock2Ptr->playerGender = MALE;
+    StringCopy(gSaveBlock2Ptr->playerName, (const u8[])_("Akilix"));
+    RtcInitLocalTimeOffset(15, 30);
     SetLastHealLocationWarp(HEAL_LOCATION_A0_INICIO_2);
-    // --- AÑADIR ESTO PARA SALTARSE A BIRCH SIN ERRORES ---
-    gSaveBlock2Ptr->playerGender = MALE; // O FEMALE
-    StringCopy(gSaveBlock2Ptr->playerName, (const u8[])_("Akilix")); // Pon el nombre por defecto que quieras
-    RtcInitLocalTimeOffset(0, 0);
-    InitTimeBasedEvents();
+
+    WarpToTruck();
     // ----------------------------------------------------
     if (IS_FRLG)
         RunScriptImmediately(EventScript_ResetAllMapFlagsFrlg);

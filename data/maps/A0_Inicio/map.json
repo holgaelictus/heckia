@@ -15,7 +15,7 @@
   "connections": [
     {
       "map": "MAP_A0_INICIO_2",
-      "offset": 0,
+      "offset": 20,
       "direction": "left"
     }
   ],
