@@ -389,6 +389,7 @@ script A0_Inicio_2_Script_CraftearTarjeta {
 
 text Text_RecetasCrafteo {
     "RECETAS DISPONIBLES:\n"
+ 
     "- Tarjeta A0: Cable Cobre + Celda."
 }
 
