@@ -393,6 +393,103 @@ text Text_RecetasCrafteo {
     "- Tarjeta A0: Cable Cobre + Celda."
 }
 
+
+script(global) A0_Inicio_2_EventScript_TutorUniversal {
+    lock
+    faceplayer
+
+    if (flag(FLAG_SYS_POKEMON_GET) == FALSE) {
+        msgbox("No tienes ningun Pokemon al que\nensenar movimientos.", MSGBOX_DEFAULT)
+        release
+        end
+    }
+
+    msgbox("Soy el Tutor Universal.\nElige un Pokemon de tu equipo.", MSGBOX_DEFAULT)
+    special(ChoosePartyMon)
+
+    if (var(VAR_0x8004) == PARTY_NOTHING_CHOSEN) {
+        msgbox("Vuelve cuando quieras aprender\nun movimiento nuevo.", MSGBOX_DEFAULT)
+        release
+        end
+    }
+
+    specialvar(VAR_RESULT, ScriptGetPartyMonSpecies)
+    if (var(VAR_RESULT) == SPECIES_EGG) {
+        msgbox("Un Huevo no puede aprender\nmovimientos todavia.", MSGBOX_DEFAULT)
+        release
+        end
+    }
+
+    // VAR_0x8005: tipo elegido (0-17), 100 = buscando, 101 = cancelado
+    // VAR_0x8006: pagina actual (0, 1, 2)
+    setvar(VAR_0x8005, 100)
+    setvar(VAR_0x8006, 0)
+
+    while (var(VAR_0x8005) == 100) {
+        message("Que tipo de ataque buscas?")
+        waitmessage
+
+        switch (var(VAR_0x8006)) {
+            case 0:
+                dynmultichoice(13, 1, FALSE, 7, 0, DYN_MULTICHOICE_CB_NONE,
+                    "Normal", "Fuego", "Agua", "Planta", "Electrico", "Hielo", "Mas tipos...")
+                closemessage
+                if (var(VAR_RESULT) == MULTI_B_PRESSED) {
+                    setvar(VAR_0x8005, 101)
+                } elif (var(VAR_RESULT) == 6) {
+                    setvar(VAR_0x8006, 1)
+                } else {
+                    copyvar(VAR_0x8005, VAR_RESULT)
+                }
+            case 1:
+                dynmultichoice(13, 1, FALSE, 7, 0, DYN_MULTICHOICE_CB_NONE,
+                    "Lucha", "Veneno", "Tierra", "Volador", "Psiquico", "Bicho", "Mas tipos...")
+                closemessage
+                if (var(VAR_RESULT) == MULTI_B_PRESSED) {
+                    setvar(VAR_0x8005, 101)
+                } elif (var(VAR_RESULT) == 6) {
+                    setvar(VAR_0x8006, 2)
+                } else {
+                    copyvar(VAR_0x8005, VAR_RESULT)
+                    addvar(VAR_0x8005, 6)
+                }
+            default:
+                dynmultichoice(13, 1, FALSE, 7, 0, DYN_MULTICHOICE_CB_NONE,
+                    "Roca", "Fantasma", "Dragon", "Siniestro", "Acero", "Hada", "Volver pag. 1")
+                closemessage
+                if (var(VAR_RESULT) == MULTI_B_PRESSED) {
+                    setvar(VAR_0x8005, 101)
+                } elif (var(VAR_RESULT) == 6) {
+                    setvar(VAR_0x8006, 0)
+                } else {
+                    copyvar(VAR_0x8005, VAR_RESULT)
+                    addvar(VAR_0x8005, 12)
+                }
+        }
+    }
+
+    if (var(VAR_0x8005) == 101) {
+        msgbox("Entendido, lo dejamos para luego.", MSGBOX_DEFAULT)
+        release
+        end
+    }
+
+    // Abre la pantalla nativa del Recordador con los movimientos del tipo elegido
+    special(TeachUniversalTutorMove)
+    waitstate
+
+    if (var(VAR_RESULT) == TRUE) {
+        msgbox("Listo! Tu Pokemon ha aprendido\nel movimiento.", MSGBOX_DEFAULT)
+    } else {
+        msgbox("No se ha ensenado ningun ataque.", MSGBOX_DEFAULT)
+    }
+
+    release
+    end
+}
+
+
+
 raw `
 .align 2
 `

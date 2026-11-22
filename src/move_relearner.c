@@ -50,7 +50,64 @@ enum {
 #define BATTLE_INFO 0
 #define CONTEST_INFO 1
 #define RETURN_FROM_MOVE_SELECT 2
+static EWRAM_DATA bool8 sUniversalTutorActive = FALSE;
+static EWRAM_DATA u8 sUniversalTutorType = TYPE_NONE;
 
+static const u8 sUniversalTutorTypes[] =
+{
+    TYPE_NORMAL, TYPE_FIRE, TYPE_WATER, TYPE_GRASS, TYPE_ELECTRIC, TYPE_ICE,
+    TYPE_FIGHTING, TYPE_POISON, TYPE_GROUND, TYPE_FLYING, TYPE_PSYCHIC, TYPE_BUG,
+    TYPE_ROCK, TYPE_GHOST, TYPE_DRAGON, TYPE_DARK, TYPE_STEEL, TYPE_FAIRY,
+};
+
+static bool8 UniversalTutorMonKnowsMove(struct BoxPokemon *mon, u16 move)
+{
+    u32 i;
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (GetBoxMonData(mon, MON_DATA_MOVE1 + i, NULL) == move)
+            return TRUE;
+    }
+    return FALSE;
+}
+
+static u16 GetUniversalTutorMoves(struct BoxPokemon *mon, u16 *moves)
+{
+    u16 move;
+    u16 numMoves = 0;
+
+    for (move = 1; move < MOVES_COUNT; move++)
+    {
+        if (move == MOVE_STRUGGLE)
+            continue;
+        if (gMovesInfo[move].type != sUniversalTutorType)
+            continue;
+        if (gMovesInfo[move].pp == 0)
+            continue;
+        if (UniversalTutorMonKnowsMove(mon, move))
+            continue;
+
+        moves[numMoves++] = move;
+        if (numMoves >= MAX_RELEARNER_MOVES)
+            break;
+    }
+
+    return numMoves;
+}
+
+void TeachUniversalTutorMove(void)
+{
+    if (gSpecialVar_0x8005 >= ARRAY_COUNT(sUniversalTutorTypes))
+    {
+        gSpecialVar_Result = FALSE;
+        ScriptContext_Enable();
+        return;
+    }
+
+    sUniversalTutorActive = TRUE;
+    sUniversalTutorType = sUniversalTutorTypes[gSpecialVar_0x8005];
+    TeachMoveRelearnerMove();
+}
 struct RelearnType
 {
     bool32 (*isActive)(void);
@@ -576,6 +633,8 @@ static void Task_MoveRelearner_Quit(u8 taskId)
     }
 
     FreeMoveRelearnerResources();
+    sUniversalTutorActive = FALSE;
+sUniversalTutorType = TYPE_NONE;
     gRelearnMode = RELEARN_MODE_NONE;
     DestroyTask(taskId);
 }
@@ -993,6 +1052,10 @@ static u32 GetRelearnerTMMoves(struct BoxPokemon *mon, u16 *moves)
 
 static u32 GetRelearnerTutorMoves(struct BoxPokemon *mon, u16 *moves)
 {
+
+    if (sUniversalTutorActive)
+    return GetUniversalTutorMoves(mon, moves);
+
     enum Species species = GetBoxMonData(mon, MON_DATA_SPECIES);
     u32 numMoves = 0;
 

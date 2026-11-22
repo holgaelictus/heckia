@@ -63,8 +63,8 @@
       "flag": "0"
     },
     {
-      "local_id": "LOCALID_A0_INICIO_2_CONTADOR",
-      "graphics_id": "OBJ_EVENT_GFX_BOY",
+      "local_id": "LOCALID_A0_INICIO_2_caft",
+      "graphics_id": "OBJ_EVENT_GFX_BOY_2",
       "x": 16,
       "y": 22,
       "elevation": 0,
@@ -74,20 +74,6 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "A0_Inicio_2_EventScript_MesaCrafteo",
-      "flag": "0"
-    },
-    {
-      "local_id": "LOCALID_A0_INICIO_2_CONTADOR",
-      "graphics_id": "OBJ_EVENT_GFX_BOY_1",
-      "x": 24,
-      "y": 19,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "A0_Inicio_2_EventScript_NpcContador",
       "flag": "0"
     }
   ],

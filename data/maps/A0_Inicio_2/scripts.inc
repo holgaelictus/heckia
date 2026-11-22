@@ -631,9 +631,176 @@ A0_Inicio_2_Script_CraftearTarjeta_11:
 	return
 
 
-# 395 "data/maps/A0_Inicio_2/scripts.pory"
+A0_Inicio_2_EventScript_TutorUniversal::
+# 398 "data/maps/A0_Inicio_2/scripts.pory"
+	lock
+# 399 "data/maps/A0_Inicio_2/scripts.pory"
+	faceplayer
+# 401 "data/maps/A0_Inicio_2/scripts.pory"
+	goto_if_unset FLAG_SYS_POKEMON_GET, A0_Inicio_2_EventScript_TutorUniversal_2
+# 407 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_EventScript_TutorUniversal_Text_1, MSGBOX_DEFAULT
+# 408 "data/maps/A0_Inicio_2/scripts.pory"
+	special ChoosePartyMon
+# 410 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_0x8004, PARTY_NOTHING_CHOSEN
+	goto_if_eq A0_Inicio_2_EventScript_TutorUniversal_5
+# 416 "data/maps/A0_Inicio_2/scripts.pory"
+	specialvar VAR_RESULT, ScriptGetPartyMonSpecies
+# 417 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_RESULT, SPECIES_EGG
+	goto_if_eq A0_Inicio_2_EventScript_TutorUniversal_8
+# 425 "data/maps/A0_Inicio_2/scripts.pory"
+	setvar VAR_0x8005, 100
+# 426 "data/maps/A0_Inicio_2/scripts.pory"
+	setvar VAR_0x8006, 0
+A0_Inicio_2_EventScript_TutorUniversal_11:
+# 428 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_0x8005, 100
+	goto_if_eq A0_Inicio_2_EventScript_TutorUniversal_12
+# 471 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_0x8005, 101
+	goto_if_eq A0_Inicio_2_EventScript_TutorUniversal_15
+# 478 "data/maps/A0_Inicio_2/scripts.pory"
+	special TeachUniversalTutorMove
+# 479 "data/maps/A0_Inicio_2/scripts.pory"
+	waitstate
+# 481 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_RESULT, TRUE
+	goto_if_eq A0_Inicio_2_EventScript_TutorUniversal_22
+# 484 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_EventScript_TutorUniversal_Text_27, MSGBOX_DEFAULT
+A0_Inicio_2_EventScript_TutorUniversal_21:
+# 487 "data/maps/A0_Inicio_2/scripts.pory"
+	release
+	end
 
-# 396 "data/maps/A0_Inicio_2/scripts.pory"
+A0_Inicio_2_EventScript_TutorUniversal_2:
+# 402 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_EventScript_TutorUniversal_Text_0, MSGBOX_DEFAULT
+# 403 "data/maps/A0_Inicio_2/scripts.pory"
+	release
+	end
+
+A0_Inicio_2_EventScript_TutorUniversal_5:
+# 411 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_EventScript_TutorUniversal_Text_2, MSGBOX_DEFAULT
+# 412 "data/maps/A0_Inicio_2/scripts.pory"
+	release
+	end
+
+A0_Inicio_2_EventScript_TutorUniversal_8:
+# 418 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_EventScript_TutorUniversal_Text_3, MSGBOX_DEFAULT
+# 419 "data/maps/A0_Inicio_2/scripts.pory"
+	release
+	end
+
+A0_Inicio_2_EventScript_TutorUniversal_12:
+# 429 "data/maps/A0_Inicio_2/scripts.pory"
+	message A0_Inicio_2_EventScript_TutorUniversal_Text_4
+# 430 "data/maps/A0_Inicio_2/scripts.pory"
+	waitmessage
+# 432 "data/maps/A0_Inicio_2/scripts.pory"
+	switch VAR_0x8006
+# 433 "data/maps/A0_Inicio_2/scripts.pory"
+	case 0, A0_Inicio_2_EventScript_TutorUniversal_18
+# 444 "data/maps/A0_Inicio_2/scripts.pory"
+	case 1, A0_Inicio_2_EventScript_TutorUniversal_19
+# 457 "data/maps/A0_Inicio_2/scripts.pory"
+	dynmultichoice 13, 1, FALSE, 7, 0, DYN_MULTICHOICE_CB_NONE, A0_Inicio_2_EventScript_TutorUniversal_Text_18, A0_Inicio_2_EventScript_TutorUniversal_Text_19, A0_Inicio_2_EventScript_TutorUniversal_Text_20, A0_Inicio_2_EventScript_TutorUniversal_Text_21, A0_Inicio_2_EventScript_TutorUniversal_Text_22, A0_Inicio_2_EventScript_TutorUniversal_Text_23, A0_Inicio_2_EventScript_TutorUniversal_Text_24
+# 459 "data/maps/A0_Inicio_2/scripts.pory"
+	closemessage
+# 460 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_RESULT, MULTI_B_PRESSED
+	goto_if_eq A0_Inicio_2_EventScript_TutorUniversal_35
+# 462 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_RESULT, 6
+	goto_if_eq A0_Inicio_2_EventScript_TutorUniversal_36
+# 465 "data/maps/A0_Inicio_2/scripts.pory"
+	copyvar VAR_0x8005, VAR_RESULT
+# 466 "data/maps/A0_Inicio_2/scripts.pory"
+	addvar VAR_0x8005, 12
+	goto A0_Inicio_2_EventScript_TutorUniversal_11
+
+A0_Inicio_2_EventScript_TutorUniversal_15:
+# 472 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_EventScript_TutorUniversal_Text_25, MSGBOX_DEFAULT
+# 473 "data/maps/A0_Inicio_2/scripts.pory"
+	release
+	end
+
+A0_Inicio_2_EventScript_TutorUniversal_18:
+# 434 "data/maps/A0_Inicio_2/scripts.pory"
+	dynmultichoice 13, 1, FALSE, 7, 0, DYN_MULTICHOICE_CB_NONE, A0_Inicio_2_EventScript_TutorUniversal_Text_5, A0_Inicio_2_EventScript_TutorUniversal_Text_6, A0_Inicio_2_EventScript_TutorUniversal_Text_7, A0_Inicio_2_EventScript_TutorUniversal_Text_8, A0_Inicio_2_EventScript_TutorUniversal_Text_9, A0_Inicio_2_EventScript_TutorUniversal_Text_10, A0_Inicio_2_EventScript_TutorUniversal_Text_11
+# 436 "data/maps/A0_Inicio_2/scripts.pory"
+	closemessage
+# 437 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_RESULT, MULTI_B_PRESSED
+	goto_if_eq A0_Inicio_2_EventScript_TutorUniversal_25
+# 439 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_RESULT, 6
+	goto_if_eq A0_Inicio_2_EventScript_TutorUniversal_26
+# 442 "data/maps/A0_Inicio_2/scripts.pory"
+	copyvar VAR_0x8005, VAR_RESULT
+	goto A0_Inicio_2_EventScript_TutorUniversal_11
+
+A0_Inicio_2_EventScript_TutorUniversal_19:
+# 445 "data/maps/A0_Inicio_2/scripts.pory"
+	dynmultichoice 13, 1, FALSE, 7, 0, DYN_MULTICHOICE_CB_NONE, A0_Inicio_2_EventScript_TutorUniversal_Text_12, A0_Inicio_2_EventScript_TutorUniversal_Text_13, A0_Inicio_2_EventScript_TutorUniversal_Text_14, A0_Inicio_2_EventScript_TutorUniversal_Text_15, A0_Inicio_2_EventScript_TutorUniversal_Text_16, A0_Inicio_2_EventScript_TutorUniversal_Text_17, A0_Inicio_2_EventScript_TutorUniversal_Text_11
+# 447 "data/maps/A0_Inicio_2/scripts.pory"
+	closemessage
+# 448 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_RESULT, MULTI_B_PRESSED
+	goto_if_eq A0_Inicio_2_EventScript_TutorUniversal_30
+# 450 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_RESULT, 6
+	goto_if_eq A0_Inicio_2_EventScript_TutorUniversal_31
+# 453 "data/maps/A0_Inicio_2/scripts.pory"
+	copyvar VAR_0x8005, VAR_RESULT
+# 454 "data/maps/A0_Inicio_2/scripts.pory"
+	addvar VAR_0x8005, 6
+	goto A0_Inicio_2_EventScript_TutorUniversal_11
+
+A0_Inicio_2_EventScript_TutorUniversal_22:
+# 482 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_EventScript_TutorUniversal_Text_26, MSGBOX_DEFAULT
+	goto A0_Inicio_2_EventScript_TutorUniversal_21
+
+A0_Inicio_2_EventScript_TutorUniversal_25:
+# 438 "data/maps/A0_Inicio_2/scripts.pory"
+	setvar VAR_0x8005, 101
+	goto A0_Inicio_2_EventScript_TutorUniversal_11
+
+A0_Inicio_2_EventScript_TutorUniversal_26:
+# 440 "data/maps/A0_Inicio_2/scripts.pory"
+	setvar VAR_0x8006, 1
+	goto A0_Inicio_2_EventScript_TutorUniversal_11
+
+A0_Inicio_2_EventScript_TutorUniversal_30:
+# 449 "data/maps/A0_Inicio_2/scripts.pory"
+	setvar VAR_0x8005, 101
+	goto A0_Inicio_2_EventScript_TutorUniversal_11
+
+A0_Inicio_2_EventScript_TutorUniversal_31:
+# 451 "data/maps/A0_Inicio_2/scripts.pory"
+	setvar VAR_0x8006, 2
+	goto A0_Inicio_2_EventScript_TutorUniversal_11
+
+A0_Inicio_2_EventScript_TutorUniversal_35:
+# 461 "data/maps/A0_Inicio_2/scripts.pory"
+	setvar VAR_0x8005, 101
+	goto A0_Inicio_2_EventScript_TutorUniversal_11
+
+A0_Inicio_2_EventScript_TutorUniversal_36:
+# 463 "data/maps/A0_Inicio_2/scripts.pory"
+	setvar VAR_0x8006, 0
+	goto A0_Inicio_2_EventScript_TutorUniversal_11
+
+
+# 493 "data/maps/A0_Inicio_2/scripts.pory"
+
+# 494 "data/maps/A0_Inicio_2/scripts.pory"
 .align 2
 
 # 147 "data/maps/A0_Inicio_2/scripts.pory"
@@ -841,6 +1008,118 @@ A0_Inicio_2_Script_CraftearTarjeta_Text_3:
 A0_Inicio_2_Script_CraftearTarjeta_Text_4:
 # 381 "data/maps/A0_Inicio_2/scripts.pory"
 	.string "Ensamblando circuito...$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_0:
+# 402 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "No tienes ningun Pokemon al que\nensenar movimientos.$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_1:
+# 407 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Soy el Tutor Universal.\nElige un Pokemon de tu equipo.$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_2:
+# 411 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Vuelve cuando quieras aprender\nun movimiento nuevo.$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_3:
+# 418 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Un Huevo no puede aprender\nmovimientos todavia.$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_4:
+# 429 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Que tipo de ataque buscas?$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_5:
+# 435 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Normal$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_6:
+# 435 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Fuego$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_7:
+# 435 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Agua$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_8:
+# 435 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Planta$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_9:
+# 435 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Electrico$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_10:
+# 435 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Hielo$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_11:
+# 435 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Mas tipos...$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_12:
+# 446 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Lucha$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_13:
+# 446 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Veneno$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_14:
+# 446 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Tierra$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_15:
+# 446 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Volador$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_16:
+# 446 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Psiquico$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_17:
+# 446 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Bicho$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_18:
+# 458 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Roca$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_19:
+# 458 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Fantasma$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_20:
+# 458 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Dragon$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_21:
+# 458 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Siniestro$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_22:
+# 458 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Acero$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_23:
+# 458 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Hada$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_24:
+# 458 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Volver pag. 1$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_25:
+# 472 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Entendido, lo dejamos para luego.$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_26:
+# 482 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Listo! Tu Pokemon ha aprendido\nel movimiento.$"
+
+A0_Inicio_2_EventScript_TutorUniversal_Text_27:
+# 484 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "No se ha ensenado ningun ataque.$"
 
 Text_KitBienvenida::
 # 275 "data/maps/A0_Inicio_2/scripts.pory"
