@@ -5296,17 +5296,11 @@ static void DoTVShowTodaysRivalTrainer(void)
             sTVShowState = 8;
             break;
         case MAPSEC_DYNAMIC:
-            switch (show->rivalTrainer.mapLayoutId)
+            sTVShowState = 9;
+            break;
             {
-            case LAYOUT_SS_TIDAL_CORRIDOR:
-            case LAYOUT_SS_TIDAL_LOWER_DECK:
-            case LAYOUT_SS_TIDAL_ROOMS:
-                sTVShowState = 10;
-                break;
-            default:
-                sTVShowState = 9;
-                break;
-            }
+            sTVShowState = 1;
+        }
             break;
         }
         break;
@@ -5455,24 +5449,7 @@ static void DoTVShowHoennTreasureInvestigators(void)
     {
     case 0:
         StringCopy(gStringVar1, GetItemName(show->treasureInvestigators.item));
-        if (show->treasureInvestigators.location == MAPSEC_DYNAMIC)
-        {
-            switch (show->treasureInvestigators.mapLayoutId)
-            {
-            case LAYOUT_SS_TIDAL_CORRIDOR:
-            case LAYOUT_SS_TIDAL_LOWER_DECK:
-            case LAYOUT_SS_TIDAL_ROOMS:
-                sTVShowState = 2;
-                break;
-            default:
-                sTVShowState = 1;
-                break;
-            }
-        }
-        else
-        {
-            sTVShowState = 1;
-        }
+        sTVShowState = 1;
         break;
     case 1:
         StringCopy(gStringVar1, GetItemName(show->treasureInvestigators.item));
