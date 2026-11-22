@@ -16099,6 +16099,53 @@ const struct ItemInfo gItemsInfo[] =
         .iconPic = gItemIcon_PokeshiDoll,
         .iconPalette = gItemIconPalette_PokeshiDoll,
     },
+    [ITEM_CABLE_COBRE] =
+    {
+        .name = COMPOUND_STRING("Cable Cobre"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "Cable conductor.\n"
+            "Sirve para reparar\n"
+            "circuitos."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .importance = 1,
+        .iconPic = gItemIcon_EscapeRope,
+        .iconPalette = gItemIconPalette_EscapeRope,
+    },
+
+    [ITEM_CELDA_ENERGIA] =
+    {
+        .name = COMPOUND_STRING("Celda Energia"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "Bateria compacta.\n"
+            "Aporta energia a\n"
+            "dispositivos."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .importance = 1,
+        .iconPic = gItemIcon_Magnet,
+        .iconPalette = gItemIconPalette_Magnet,
+    },
+
+    [ITEM_TARJETA_ACCESO] =
+    {
+        .name = COMPOUND_STRING("Tarjeta A0"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "Tarjeta activada.\n"
+            "Abre el cierre de\n"
+            "la Sala A0."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .importance = 1,
+        .iconPic = gItemIcon_StorageKey,
+        .iconPalette = gItemIconPalette_SecretKey,
+    },
 };
 
 #undef ITEM_NAME

@@ -476,9 +476,164 @@ A0_Inicio_2_Script_CurarEquipoConEfecto::
 	return
 
 
-# 285 "data/maps/A0_Inicio_2/scripts.pory"
+A0_Inicio_2_EventScript_BuscarCable::
+# 290 "data/maps/A0_Inicio_2/scripts.pory"
+	lockall
+# 291 "data/maps/A0_Inicio_2/scripts.pory"
+	goto_if_set FLAG_A0_INICIO_2_CABLE_COBRE, A0_Inicio_2_EventScript_BuscarCable_2
+# 296 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_EventScript_BuscarCable_Text_1, MSGBOX_DEFAULT
+# 297 "data/maps/A0_Inicio_2/scripts.pory"
+	giveitem ITEM_CABLE_COBRE, 1
+# 298 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_RESULT, TRUE
+	goto_if_eq A0_Inicio_2_EventScript_BuscarCable_5
+A0_Inicio_2_EventScript_BuscarCable_4:
+# 301 "data/maps/A0_Inicio_2/scripts.pory"
+	releaseall
+	end
 
-# 286 "data/maps/A0_Inicio_2/scripts.pory"
+A0_Inicio_2_EventScript_BuscarCable_2:
+# 292 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_EventScript_BuscarCable_Text_0, MSGBOX_DEFAULT
+# 293 "data/maps/A0_Inicio_2/scripts.pory"
+	releaseall
+	end
+
+A0_Inicio_2_EventScript_BuscarCable_5:
+# 299 "data/maps/A0_Inicio_2/scripts.pory"
+	setflag FLAG_A0_INICIO_2_CABLE_COBRE
+	goto A0_Inicio_2_EventScript_BuscarCable_4
+
+
+A0_Inicio_2_EventScript_BuscarCelda::
+# 306 "data/maps/A0_Inicio_2/scripts.pory"
+	lockall
+# 307 "data/maps/A0_Inicio_2/scripts.pory"
+	goto_if_set FLAG_A0_INICIO_2_CELDA_ENERGIA, A0_Inicio_2_EventScript_BuscarCelda_2
+# 312 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_EventScript_BuscarCelda_Text_1, MSGBOX_DEFAULT
+# 313 "data/maps/A0_Inicio_2/scripts.pory"
+	giveitem ITEM_CELDA_ENERGIA, 1
+# 314 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_RESULT, TRUE
+	goto_if_eq A0_Inicio_2_EventScript_BuscarCelda_5
+A0_Inicio_2_EventScript_BuscarCelda_4:
+# 317 "data/maps/A0_Inicio_2/scripts.pory"
+	releaseall
+	end
+
+A0_Inicio_2_EventScript_BuscarCelda_2:
+# 308 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_EventScript_BuscarCelda_Text_0, MSGBOX_DEFAULT
+# 309 "data/maps/A0_Inicio_2/scripts.pory"
+	releaseall
+	end
+
+A0_Inicio_2_EventScript_BuscarCelda_5:
+# 315 "data/maps/A0_Inicio_2/scripts.pory"
+	setflag FLAG_A0_INICIO_2_CELDA_ENERGIA
+	goto A0_Inicio_2_EventScript_BuscarCelda_4
+
+
+A0_Inicio_2_EventScript_MesaCrafteo::
+# 326 "data/maps/A0_Inicio_2/scripts.pory"
+	lockall
+# 327 "data/maps/A0_Inicio_2/scripts.pory"
+	message A0_Inicio_2_EventScript_MesaCrafteo_Text_0
+# 328 "data/maps/A0_Inicio_2/scripts.pory"
+	waitmessage
+# 330 "data/maps/A0_Inicio_2/scripts.pory"
+	dynmultichoice 11, 1, FALSE, 3, 0, DYN_MULTICHOICE_CB_NONE, A0_Inicio_2_EventScript_MesaCrafteo_Text_1, A0_Inicio_2_EventScript_MesaCrafteo_Text_2, A0_Inicio_2_EventScript_MesaCrafteo_Text_3
+# 335 "data/maps/A0_Inicio_2/scripts.pory"
+	closemessage
+# 337 "data/maps/A0_Inicio_2/scripts.pory"
+	switch VAR_RESULT
+# 338 "data/maps/A0_Inicio_2/scripts.pory"
+	case 0, A0_Inicio_2_EventScript_MesaCrafteo_3
+# 340 "data/maps/A0_Inicio_2/scripts.pory"
+	case 1, A0_Inicio_2_EventScript_MesaCrafteo_4
+A0_Inicio_2_EventScript_MesaCrafteo_1:
+# 347 "data/maps/A0_Inicio_2/scripts.pory"
+	releaseall
+	end
+
+A0_Inicio_2_EventScript_MesaCrafteo_3:
+# 339 "data/maps/A0_Inicio_2/scripts.pory"
+	call A0_Inicio_2_Script_CraftearTarjeta
+	goto A0_Inicio_2_EventScript_MesaCrafteo_1
+
+A0_Inicio_2_EventScript_MesaCrafteo_4:
+# 341 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox Text_RecetasCrafteo, MSGBOX_DEFAULT
+	goto A0_Inicio_2_EventScript_MesaCrafteo_1
+
+
+A0_Inicio_2_Script_CraftearTarjeta::
+# 352 "data/maps/A0_Inicio_2/scripts.pory"
+	checkitem ITEM_TARJETA_ACCESO, 1
+# 353 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_RESULT, TRUE
+	goto_if_eq A0_Inicio_2_Script_CraftearTarjeta_2
+# 358 "data/maps/A0_Inicio_2/scripts.pory"
+	checkitem ITEM_CABLE_COBRE, 1
+# 359 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_RESULT, FALSE
+	goto_if_eq A0_Inicio_2_Script_CraftearTarjeta_5
+# 365 "data/maps/A0_Inicio_2/scripts.pory"
+	checkitem ITEM_CELDA_ENERGIA, 1
+# 366 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_RESULT, FALSE
+	goto_if_eq A0_Inicio_2_Script_CraftearTarjeta_8
+# 372 "data/maps/A0_Inicio_2/scripts.pory"
+	checkitemspace ITEM_TARJETA_ACCESO, 1
+# 373 "data/maps/A0_Inicio_2/scripts.pory"
+	compare VAR_RESULT, FALSE
+	goto_if_eq A0_Inicio_2_Script_CraftearTarjeta_11
+# 380 "data/maps/A0_Inicio_2/scripts.pory"
+	playse SE_SWITCH
+# 381 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_Script_CraftearTarjeta_Text_4, MSGBOX_DEFAULT
+# 382 "data/maps/A0_Inicio_2/scripts.pory"
+	delay 20
+# 384 "data/maps/A0_Inicio_2/scripts.pory"
+	removeitem ITEM_CABLE_COBRE, 1
+# 385 "data/maps/A0_Inicio_2/scripts.pory"
+	removeitem ITEM_CELDA_ENERGIA, 1
+# 386 "data/maps/A0_Inicio_2/scripts.pory"
+	giveitem ITEM_TARJETA_ACCESO, 1
+	return
+
+A0_Inicio_2_Script_CraftearTarjeta_2:
+# 354 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_Script_CraftearTarjeta_Text_0, MSGBOX_DEFAULT
+	return
+
+A0_Inicio_2_Script_CraftearTarjeta_5:
+# 360 "data/maps/A0_Inicio_2/scripts.pory"
+	playse SE_FAILURE
+# 361 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_Script_CraftearTarjeta_Text_1, MSGBOX_DEFAULT
+	return
+
+A0_Inicio_2_Script_CraftearTarjeta_8:
+# 367 "data/maps/A0_Inicio_2/scripts.pory"
+	playse SE_FAILURE
+# 368 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_Script_CraftearTarjeta_Text_2, MSGBOX_DEFAULT
+	return
+
+A0_Inicio_2_Script_CraftearTarjeta_11:
+# 374 "data/maps/A0_Inicio_2/scripts.pory"
+	playse SE_FAILURE
+# 375 "data/maps/A0_Inicio_2/scripts.pory"
+	msgbox A0_Inicio_2_Script_CraftearTarjeta_Text_3, MSGBOX_DEFAULT
+	return
+
+
+# 395 "data/maps/A0_Inicio_2/scripts.pory"
+
+# 396 "data/maps/A0_Inicio_2/scripts.pory"
 .align 2
 
 # 147 "data/maps/A0_Inicio_2/scripts.pory"
@@ -635,6 +790,58 @@ A0_Inicio_2_EventScript_CombateRacha_Text_5:
 # 259 "data/maps/A0_Inicio_2/scripts.pory"
 	.string "Has huido o perdido.\nTu racha vuelve a 0.$"
 
+A0_Inicio_2_EventScript_BuscarCable_Text_0:
+# 292 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Ya registraste este cajon.\nNo queda nada util.$"
+
+A0_Inicio_2_EventScript_BuscarCable_Text_1:
+# 296 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Encuentras un cable suelto\ndetras del panel...$"
+
+A0_Inicio_2_EventScript_BuscarCelda_Text_0:
+# 308 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "El compartimento de la bateria\nesta vacio.$"
+
+A0_Inicio_2_EventScript_BuscarCelda_Text_1:
+# 312 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Hay una pequena bateria encajada\nen la ranura...$"
+
+A0_Inicio_2_EventScript_MesaCrafteo_Text_0:
+# 327 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Mesa de trabajo.\nQue quieres fabricar?$"
+
+A0_Inicio_2_EventScript_MesaCrafteo_Text_1:
+# 331 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Tarjeta A0$"
+
+A0_Inicio_2_EventScript_MesaCrafteo_Text_2:
+# 332 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Ver recetas$"
+
+A0_Inicio_2_EventScript_MesaCrafteo_Text_3:
+# 333 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Salir$"
+
+A0_Inicio_2_Script_CraftearTarjeta_Text_0:
+# 354 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Ya fabricaste la Tarjeta A0.$"
+
+A0_Inicio_2_Script_CraftearTarjeta_Text_1:
+# 361 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Falta material: 1x Cable Cobre.$"
+
+A0_Inicio_2_Script_CraftearTarjeta_Text_2:
+# 368 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Falta material: 1x Celda Energia.$"
+
+A0_Inicio_2_Script_CraftearTarjeta_Text_3:
+# 375 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "No tienes espacio en la Mochila.$"
+
+A0_Inicio_2_Script_CraftearTarjeta_Text_4:
+# 381 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "Ensamblando circuito...$"
+
 Text_KitBienvenida::
 # 275 "data/maps/A0_Inicio_2/scripts.pory"
 	.string "Bienvenido al mapa de pruebas!\n"
@@ -644,3 +851,8 @@ Text_KitYaActivo::
 # 280 "data/maps/A0_Inicio_2/scripts.pory"
 	.string "Ya tienes tu equipo activo.\n"
 	.string "Quieres curar a tus Pokemon?$"
+
+Text_RecetasCrafteo::
+# 390 "data/maps/A0_Inicio_2/scripts.pory"
+	.string "RECETAS DISPONIBLES:\n"
+	.string "- Tarjeta A0: Cable Cobre + Celda.$"

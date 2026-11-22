@@ -282,6 +282,116 @@ text Text_KitYaActivo {
     "Quieres curar a tus Pokemon?"
 }
 
+// =========================================================
+// RECOGIDA DE MATERIALES (asignables a BG Events / muebles)
+// =========================================================
+
+script(global) A0_Inicio_2_EventScript_BuscarCable {
+    lockall
+    if (flag(FLAG_A0_INICIO_2_CABLE_COBRE) == TRUE) {
+        msgbox("Ya registraste este cajon.\nNo queda nada util.", MSGBOX_DEFAULT)
+        releaseall
+        end
+    }
+    msgbox("Encuentras un cable suelto\ndetras del panel...", MSGBOX_DEFAULT)
+    giveitem(ITEM_CABLE_COBRE, 1)
+    if (var(VAR_RESULT) == TRUE) {
+        setflag(FLAG_A0_INICIO_2_CABLE_COBRE)
+    }
+    releaseall
+    end
+}
+
+script(global) A0_Inicio_2_EventScript_BuscarCelda {
+    lockall
+    if (flag(FLAG_A0_INICIO_2_CELDA_ENERGIA) == TRUE) {
+        msgbox("El compartimento de la bateria\nesta vacio.", MSGBOX_DEFAULT)
+        releaseall
+        end
+    }
+    msgbox("Hay una pequena bateria encajada\nen la ranura...", MSGBOX_DEFAULT)
+    giveitem(ITEM_CELDA_ENERGIA, 1)
+    if (var(VAR_RESULT) == TRUE) {
+        setflag(FLAG_A0_INICIO_2_CELDA_ENERGIA)
+    }
+    releaseall
+    end
+}
+
+// =========================================================
+// MESA DE CRAFTEO CON DYNMULTICHOICE
+// =========================================================
+
+script(global) A0_Inicio_2_EventScript_MesaCrafteo {
+    lockall
+    message("Mesa de trabajo.\nQue quieres fabricar?")
+    waitmessage
+
+    dynmultichoice(11, 1, FALSE, 3, 0, DYN_MULTICHOICE_CB_NONE,
+        "Tarjeta A0",
+        "Ver recetas",
+        "Salir"
+    )
+    closemessage
+
+    switch (var(VAR_RESULT)) {
+        case 0:
+            call(A0_Inicio_2_Script_CraftearTarjeta)
+        case 1:
+            msgbox(Text_RecetasCrafteo, MSGBOX_DEFAULT)
+        default:
+            // Opcion "Salir" o pulsar B (MULTI_B_PRESSED)
+            break
+    }
+
+    releaseall
+    end
+}
+
+script A0_Inicio_2_Script_CraftearTarjeta {
+    checkitem(ITEM_TARJETA_ACCESO, 1)
+    if (var(VAR_RESULT) == TRUE) {
+        msgbox("Ya fabricaste la Tarjeta A0.", MSGBOX_DEFAULT)
+        return
+    }
+
+    checkitem(ITEM_CABLE_COBRE, 1)
+    if (var(VAR_RESULT) == FALSE) {
+        playse(SE_FAILURE)
+        msgbox("Falta material: 1x Cable Cobre.", MSGBOX_DEFAULT)
+        return
+    }
+
+    checkitem(ITEM_CELDA_ENERGIA, 1)
+    if (var(VAR_RESULT) == FALSE) {
+        playse(SE_FAILURE)
+        msgbox("Falta material: 1x Celda Energia.", MSGBOX_DEFAULT)
+        return
+    }
+
+    checkitemspace(ITEM_TARJETA_ACCESO, 1)
+    if (var(VAR_RESULT) == FALSE) {
+        playse(SE_FAILURE)
+        msgbox("No tienes espacio en la Mochila.", MSGBOX_DEFAULT)
+        return
+    }
+
+    // Consumir ingredientes y entregar resultado
+    playse(SE_SWITCH)
+    msgbox("Ensamblando circuito...", MSGBOX_DEFAULT)
+    delay(20)
+
+    removeitem(ITEM_CABLE_COBRE, 1)
+    removeitem(ITEM_CELDA_ENERGIA, 1)
+    giveitem(ITEM_TARJETA_ACCESO, 1)
+    return
+}
+
+text Text_RecetasCrafteo {
+    "RECETAS DISPONIBLES:\n"
+    "- Tarjeta A0: Cable Cobre + Celda."
+}
+
 raw `
 .align 2
 `
